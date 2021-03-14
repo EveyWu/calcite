@@ -19,6 +19,8 @@ package org.apache.calcite.sql.parser.dialect.visitor;
 import org.apache.calcite.sql.SqlCall;
 import org.apache.calcite.sql.SqlInsert;
 import org.apache.calcite.sql.SqlNode;
+import org.apache.calcite.sql.ddl.SqlCreateTable;
+import org.apache.calcite.sql.parser.dialect.hive.ddl.HiveCreateTable;
 import org.apache.calcite.sql.util.SqlBasicVisitor;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -31,12 +33,23 @@ public class LineageVisitor extends SqlBasicVisitor<@Nullable Boolean> {
     return false;
   }
 
+  public @Nullable Boolean visit(final SqlCreateTable call) {
+    if (call instanceof HiveCreateTable) {
+      System.out.println("EXTERNAL=" + ((HiveCreateTable) call).external);
+    }
+    return false;
+  }
 
-  @Override public @Nullable Boolean visit(final SqlCall call) {
+
+  @Override
+  public @Nullable Boolean visit(final SqlCall call) {
     // Handler creates a new copy of 'call' only if one or more operands
     // change.
     if (call instanceof SqlInsert) {
       visit((SqlInsert) call);
+    }
+    if (call instanceof SqlCreateTable) {
+      visit((SqlCreateTable) call);
     }
     return false;
   }

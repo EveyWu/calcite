@@ -49,10 +49,10 @@ public class SQLDialectTest {
 
   @Test
   void simpleSQL() throws SqlParseException {
-    String sql =
-        "insert into newstu select id,name,age FROM (select id,name,age FROM stu) T left join T2 on T.id = T2.rid where age<20";
     /*String sql =
-        "CREATE TEMPORARY TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING);";*/
+        "insert into newstu select id,name,age FROM (select id,name,age FROM stu) T left join T2 on T.id = T2.rid where age<20";*/
+    String sql =
+        "CREATE EXTERNAL TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
 
     // 解析配置
     //SqlParser.Config config = SqlParser.configBuilder().setLex(Lex.MYSQL).build();

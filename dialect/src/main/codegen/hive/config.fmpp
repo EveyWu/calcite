@@ -30,6 +30,7 @@ data: {
       "org.apache.calcite.sql.SqlCreate"
       "org.apache.calcite.sql.SqlDrop"
       "org.apache.calcite.sql.ddl.SqlDdlNodes"
+      "org.apache.calcite.sql.parser.dialect.hive.ddl.HiveDdlNodes"
       "java.util.Map"
       "java.util.HashMap"
     ]

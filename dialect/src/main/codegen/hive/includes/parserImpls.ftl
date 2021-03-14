@@ -33,6 +33,16 @@ boolean IfExistsOpt() :
     { return false; }
 }
 
+boolean IfExternal() :
+{
+}
+{
+    <EXTERNAL> { return true; }
+|
+    { return false; }
+}
+
+
 SqlCreate SqlCreateSchema(Span s, boolean replace) :
 {
     final boolean ifNotExists;
@@ -245,16 +255,18 @@ SqlCreate SqlCreateType(Span s, boolean replace) :
 SqlCreate SqlCreateTable(Span s, boolean replace) :
 {
     final boolean ifNotExists;
+    final boolean external;
     final SqlIdentifier id;
     SqlNodeList tableElementList = null;
     SqlNode query = null;
 }
 {
+    external = IfExternal()
     <TABLE> ifNotExists = IfNotExistsOpt() id = CompoundIdentifier()
     [ tableElementList = TableElementList() ]
     [ <AS> query = OrderedQueryOrExpr(ExprContext.ACCEPT_QUERY) ]
     {
-        return SqlDdlNodes.createTable(s.end(this), replace, ifNotExists, id,
+        return HiveDdlNodes.createTable(s.end(this), replace, external,ifNotExists, id,
             tableElementList, query);
     }
 }
