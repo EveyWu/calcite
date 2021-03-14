@@ -80,6 +80,7 @@ include(
     "server",
     "spark",
     "splunk",
+    "dialect",
     "ubenchmark"
 )
 
