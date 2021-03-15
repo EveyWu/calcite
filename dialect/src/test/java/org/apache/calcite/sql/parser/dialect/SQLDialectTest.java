@@ -17,6 +17,8 @@
 
 package org.apache.calcite.sql.parser.dialect;
 
+import java.io.Reader;
+
 import org.apache.calcite.sql.SqlDialect.DatabaseProduct;
 import org.apache.calcite.sql.SqlNode;
 import org.apache.calcite.sql.parser.SqlParseException;
@@ -29,6 +31,7 @@ import org.apache.calcite.sql.parser.impl.SqlParserImpl;
 import org.junit.jupiter.api.Test;
 
 public class SQLDialectTest {
+
 
 
   /**
@@ -49,17 +52,14 @@ public class SQLDialectTest {
 
   @Test
   void simpleSQL() throws SqlParseException {
-    /*String sql =
-        "insert into newstu select id,name,age FROM (select id,name,age FROM stu) T left join T2 on T.id = T2.rid where age<20";*/
+    //String sql = "insert into newstu select id,name,age FROM (select id,name,age FROM stu) T left join T2 on T.id = T2.rid where age<20";
     //外表
-    /*String sql =
-        "CREATE EXTERNAL TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";*/
+    String sql = "CREATE EXTERNAL TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
     //临时表
     //String sql = "CREATE TEMPORARY TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
 
     //支持create comment
-    String sql =
-        "CREATE EXTERNAL TABLE page_view(viewTime INT) COMMENT 'This is the staging page view table'";
+    //String sql ="CREATE EXTERNAL TABLE page_view(viewTime INT) COMMENT 'This is the staging page view table'";
 
     // 解析配置
     //SqlParser.Config config = SqlParser.configBuilder().setLex(Lex.MYSQL).build();

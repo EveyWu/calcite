@@ -42,6 +42,15 @@ boolean IfExternal() :
     { return false; }
 }
 
+boolean IfTemporary() :
+{
+}
+{
+      <TEMPORARY> { return true; }
+|
+      { return false; }
+}
+
 
 SqlCreate SqlCreateSchema(Span s, boolean replace) :
 {

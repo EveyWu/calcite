@@ -31,11 +31,10 @@ public class HiveDdlNodes {
   /**
    * Creates a CREATE TABLE.
    */
-  public static HiveCreateTable createTable(SqlParserPos pos, boolean replace, boolean external,
+  public static HiveCreateTable createTable(SqlParserPos pos, boolean replace, boolean temporary, boolean external,
                                             boolean ifNotExists, SqlIdentifier name,
                                             SqlNodeList columnList,
                                             SqlNode query) {
-    return new HiveCreateTable(pos, replace, external, ifNotExists, name, columnList,
-        query);
+    return new HiveCreateTable(pos, replace, temporary, external, ifNotExists, name, columnList, query);
   }
 }

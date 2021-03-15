@@ -31,27 +31,33 @@ public class HiveCreateTable extends SqlCreateTable {
    * Whether "External Table" was specified.
    */
   public final boolean external;
+  public final boolean temporary;
 
   /**
    * Creates a SqlCreateTable.
    *
    * @param pos
    * @param replace
+   * @param temporary
    * @param ifNotExists
    * @param name
    * @param columnList
    * @param query
    */
-  protected HiveCreateTable(SqlParserPos pos, boolean replace,
+  protected HiveCreateTable(SqlParserPos pos, boolean replace, boolean temporary,
                             boolean external, boolean ifNotExists, SqlIdentifier name,
                             @Nullable SqlNodeList columnList,
                             @Nullable SqlNode query) {
     super(pos, replace, ifNotExists, name, columnList, query);
     this.external = external;
+    this.temporary = temporary;
   }
 
   @Override public void unparse(SqlWriter writer, int leftPrec, int rightPrec) {
     writer.keyword("CREATE");
+    if(temporary){
+      writer.keyword("TEMPORARY");
+    }
     if(external){
       writer.keyword("EXTERNAL");
     }

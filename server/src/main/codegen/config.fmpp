@@ -44,6 +44,8 @@ data: {
       "JAR"
       "FILE"
       "ARCHIVE"
+      "EXTERNAL"
+      "TEMPORARY"
     ]
 
     # List of non-reserved keywords to add;
