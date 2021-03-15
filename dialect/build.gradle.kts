@@ -36,15 +36,15 @@ dependencies {
     testRuntimeOnly("org.slf4j:slf4j-log4j12")
 }
 
-val fmppMain by tasks.registering(org.apache.calcite.buildtools.fmpp.FmppTask::class) {
+val fmppHive by tasks.registering(org.apache.calcite.buildtools.fmpp.FmppTask::class) {
     inputs.dir("src/main/codegen")
     config.set(file("src/main/codegen/hive/config.fmpp"))
     templates.set(file("$rootDir/core/src/main/codegen/templates"))
 }
 
-val javaCCMain by tasks.registering(org.apache.calcite.buildtools.javacc.JavaCCTask::class) {
-    dependsOn(fmppMain)
-    val parserFile = fmppMain.map {
+val javaCCHive by tasks.registering(org.apache.calcite.buildtools.javacc.JavaCCTask::class) {
+    dependsOn(fmppHive)
+    val parserFile = fmppHive.map {
         it.output.asFileTree.matching { include("**/Parser.jj") }
     }
     inputFile.from(parserFile)
@@ -69,7 +69,6 @@ val javaCCSpark by tasks.registering(org.apache.calcite.buildtools.javacc.JavaCC
 ide {
     fun generatedSource(javacc: TaskProvider<org.apache.calcite.buildtools.javacc.JavaCCTask>, sourceSet: String) =
         generatedJavaSources(javacc.get(), javacc.get().output.get().asFile, sourceSets.named(sourceSet))
-
-    generatedSource(javaCCMain, "main")
+    generatedSource(javaCCHive, "main")
     generatedSource(javaCCSpark, "main")
 }

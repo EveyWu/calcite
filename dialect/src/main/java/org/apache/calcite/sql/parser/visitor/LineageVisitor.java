@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.calcite.sql.parser.dialect.visitor;
+package org.apache.calcite.sql.parser.visitor;
 
 import org.apache.calcite.sql.SqlCall;
 import org.apache.calcite.sql.SqlInsert;

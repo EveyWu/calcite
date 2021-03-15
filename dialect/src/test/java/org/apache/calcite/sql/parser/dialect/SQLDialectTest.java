@@ -24,7 +24,7 @@ import org.apache.calcite.sql.parser.SqlParser;
 import org.apache.calcite.sql.parser.SqlParserImplFactory;
 import org.apache.calcite.sql.parser.dialect.hive.HiveParserImpl;
 import org.apache.calcite.sql.parser.dialect.spark.SparkParserImpl;
-import org.apache.calcite.sql.parser.dialect.visitor.LineageVisitor;
+import org.apache.calcite.sql.parser.visitor.LineageVisitor;
 import org.apache.calcite.sql.parser.impl.SqlParserImpl;
 import org.junit.jupiter.api.Test;
 
