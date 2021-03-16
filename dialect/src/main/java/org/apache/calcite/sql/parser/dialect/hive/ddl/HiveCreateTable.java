@@ -27,10 +27,18 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class HiveCreateTable extends SqlCreateTable {
 
+  public static enum Type {
+    GLOBAL_TEMPORARY, LOCAL_TEMPORARY, TEMPORARY, SHADOW
+  }
+
+
   /**
-   * Whether "External Table" was specified.
+   * Whether "EXTERNAL TABLE" was specified.
    */
   public final boolean external;
+  /**
+   * Whether "TEMPORARY TABLE" was specified.
+   */
   public final boolean temporary;
 
   /**
@@ -38,14 +46,15 @@ public class HiveCreateTable extends SqlCreateTable {
    *
    * @param pos
    * @param replace
+   * @param external
    * @param temporary
    * @param ifNotExists
    * @param name
    * @param columnList
    * @param query
    */
-  protected HiveCreateTable(SqlParserPos pos, boolean replace, boolean temporary,
-                            boolean external, boolean ifNotExists, SqlIdentifier name,
+  protected HiveCreateTable(SqlParserPos pos, boolean replace, boolean external,
+                            boolean temporary, boolean ifNotExists, SqlIdentifier name,
                             @Nullable SqlNodeList columnList,
                             @Nullable SqlNode query) {
     super(pos, replace, ifNotExists, name, columnList, query);
@@ -53,13 +62,14 @@ public class HiveCreateTable extends SqlCreateTable {
     this.temporary = temporary;
   }
 
-  @Override public void unparse(SqlWriter writer, int leftPrec, int rightPrec) {
+  @Override
+  public void unparse(SqlWriter writer, int leftPrec, int rightPrec) {
     writer.keyword("CREATE");
-    if(temporary){
-      writer.keyword("TEMPORARY");
-    }
-    if(external){
+    if (external) {
       writer.keyword("EXTERNAL");
+    }
+    if (temporary) {
+      writer.keyword("TEMPORARY");
     }
     writer.keyword("TABLE");
     if (ifNotExists) {

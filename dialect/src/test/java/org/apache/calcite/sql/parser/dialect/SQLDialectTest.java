@@ -54,9 +54,9 @@ public class SQLDialectTest {
   void simpleSQL() throws SqlParseException {
     //String sql = "insert into newstu select id,name,age FROM (select id,name,age FROM stu) T left join T2 on T.id = T2.rid where age<20";
     //外表
-    String sql = "CREATE EXTERNAL TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
+    //String sql = "CREATE EXTERNAL TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
     //临时表
-    //String sql = "CREATE TEMPORARY TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
+    String sql = "CREATE TEMPORARY TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
 
     //支持create comment
     //String sql ="CREATE EXTERNAL TABLE page_view(viewTime INT) COMMENT 'This is the staging page view table'";

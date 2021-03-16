@@ -33,7 +33,7 @@ boolean IfExistsOpt() :
     { return false; }
 }
 
-boolean IfExternal() :
+boolean IfExternalOpt() :
 {
 }
 {
@@ -42,13 +42,13 @@ boolean IfExternal() :
     { return false; }
 }
 
-boolean IfTemporary() :
+boolean IfTemporaryOpt() :
 {
 }
 {
-      <TEMPORARY> { return true; }
+    <TEMPORARY> { return true; }
 |
-      { return false; }
+    { return false; }
 }
 
 
@@ -265,17 +265,19 @@ SqlCreate SqlCreateTable(Span s, boolean replace) :
 {
     final boolean ifNotExists;
     final boolean external;
+    final boolean temporary;
     final SqlIdentifier id;
     SqlNodeList tableElementList = null;
     SqlNode query = null;
 }
 {
-    external = IfExternal()
+    external = IfExternalOpt()
+    temporary = IfTemporaryOpt()
     <TABLE> ifNotExists = IfNotExistsOpt() id = CompoundIdentifier()
     [ tableElementList = TableElementList() ]
     [ <AS> query = OrderedQueryOrExpr(ExprContext.ACCEPT_QUERY) ]
     {
-        return HiveDdlNodes.createTable(s.end(this), replace, external,ifNotExists, id,
+        return HiveDdlNodes.createTable(s.end(this), replace, external, temporary, ifNotExists, id,
             tableElementList, query);
     }
 }

@@ -36,6 +36,7 @@ public class LineageVisitor extends SqlBasicVisitor<@Nullable Boolean> {
   public @Nullable Boolean visit(final SqlCreateTable call) {
     if (call instanceof HiveCreateTable) {
       System.out.println("EXTERNAL=" + ((HiveCreateTable) call).external);
+      System.out.println("TEMPORARY=" + ((HiveCreateTable) call).temporary);
     }
     return false;
   }
