@@ -27,6 +27,12 @@ dependencies {
 
     implementation("com.google.guava:guava")
     implementation("org.slf4j:slf4j-api")
+    implementation("org.springframework:spring-beans:5.3.4")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-collections4:4.4")
+
+
+
 
     testImplementation(project(":core", "testClasses"))
     testImplementation("net.hydromatic:quidem")

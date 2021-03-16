@@ -16,9 +16,15 @@
  */
 package org.apache.calcite.sql.parser.visitor;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Map;
+import org.apache.calcite.sql.SqlBasicCall;
 import org.apache.calcite.sql.SqlCall;
+import org.apache.calcite.sql.SqlIdentifier;
 import org.apache.calcite.sql.SqlInsert;
 import org.apache.calcite.sql.SqlNode;
+import org.apache.calcite.sql.SqlSelect;
 import org.apache.calcite.sql.ddl.SqlCreateTable;
 import org.apache.calcite.sql.parser.dialect.hive.ddl.HiveCreateTable;
 import org.apache.calcite.sql.util.SqlBasicVisitor;
@@ -33,24 +39,64 @@ public class LineageVisitor extends SqlBasicVisitor<@Nullable Boolean> {
     return false;
   }
 
-  public @Nullable Boolean visit(final SqlCreateTable call) {
-    if (call instanceof HiveCreateTable) {
-      System.out.println("EXTERNAL=" + ((HiveCreateTable) call).external);
-      System.out.println("TEMPORARY=" + ((HiveCreateTable) call).temporary);
+  public @Nullable String visit(final SqlCreateTable call) {
+    final String target = call.name.names.iterator().next();
+
+    String source = null;
+    if (call.query instanceof SqlSelect) {
+      source = visit((SqlSelect) call.query);
     }
+    if (source != null && target != null) {
+      System.out.println(source + " => " + target);
+    }
+    return target;
+  }
+
+  public String visit(final SqlSelect call) {
+    SqlNode from = call.getFrom();
+    String source = null;
+    String target = null;
+    if (from instanceof SqlIdentifier) {
+      target = ((SqlIdentifier) from).names.iterator().next();
+    }
+    if (from instanceof SqlBasicCall) {
+      final @Nullable SqlNode[] operands = ((SqlBasicCall) from).getOperands();
+      final SqlNode node0 = operands[0];
+      final SqlNode node1 = operands[1];
+      if (node0 instanceof SqlSelect) {
+        source = visit((SqlSelect) node0);
+      }
+      if (node1 instanceof SqlIdentifier) {
+        target = ((SqlIdentifier) node1).names.iterator().next();
+      }
+    }
+    if (from instanceof SqlSelect) {
+      target = "subquery-instance";
+      source = visit((SqlSelect) from);
+    }
+    if (source != null && target != null) {
+      System.out.println(source + " => " + target);
+    }
+    return target;
+  }
+
+
+  public @Nullable Boolean visit(final SqlBasicCall call) {
+    final @Nullable SqlNode[] operands = call.operands;
     return false;
   }
 
 
   @Override
   public @Nullable Boolean visit(final SqlCall call) {
-    // Handler creates a new copy of 'call' only if one or more operands
-    // change.
+    if (call instanceof SqlCreateTable) {
+      visit((SqlCreateTable) call);
+    }
     if (call instanceof SqlInsert) {
       visit((SqlInsert) call);
     }
-    if (call instanceof SqlCreateTable) {
-      visit((SqlCreateTable) call);
+    if (call instanceof SqlSelect) {
+      visit((SqlSelect) call);
     }
     return false;
   }

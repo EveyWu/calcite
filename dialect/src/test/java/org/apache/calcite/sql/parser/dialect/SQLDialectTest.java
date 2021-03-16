@@ -56,10 +56,14 @@ public class SQLDialectTest {
     //外表
     //String sql = "CREATE EXTERNAL TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
     //临时表
-    String sql = "CREATE TEMPORARY TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
+    //String sql = "CREATE TEMPORARY TABLE list_bucket_multiple (col1 STRING, col2 int, col3 STRING)";
+
 
     //支持create comment
     //String sql ="CREATE EXTERNAL TABLE page_view(viewTime INT) COMMENT 'This is the staging page view table'";
+    //String sql = "SELECT key FROM src UNION SELECT key FROM src1";
+    String sql = "SELECT col2 FROM( SELECT (a+b) AS col2 FROM t1) t2";
+    //String sql = "CREATE TABLE stu_01 AS SELECT ID, NAME from stu";
 
     // 解析配置
     //SqlParser.Config config = SqlParser.configBuilder().setLex(Lex.MYSQL).build();
