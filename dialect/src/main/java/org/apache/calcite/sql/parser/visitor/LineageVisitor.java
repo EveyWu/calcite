@@ -26,7 +26,6 @@ import org.apache.calcite.sql.SqlInsert;
 import org.apache.calcite.sql.SqlNode;
 import org.apache.calcite.sql.SqlSelect;
 import org.apache.calcite.sql.ddl.SqlCreateTable;
-import org.apache.calcite.sql.parser.dialect.hive.ddl.HiveCreateTable;
 import org.apache.calcite.sql.util.SqlBasicVisitor;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -80,11 +79,6 @@ public class LineageVisitor extends SqlBasicVisitor<@Nullable Boolean> {
     return target;
   }
 
-
-  public @Nullable Boolean visit(final SqlBasicCall call) {
-    final @Nullable SqlNode[] operands = call.operands;
-    return false;
-  }
 
 
   @Override
